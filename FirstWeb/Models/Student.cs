@@ -14,19 +14,22 @@ namespace FirstWeb.Models
         public DateTime ngaySinh { get; set; }
         [Display(Name = "Số Điểm Cộng")]
         public int soDiemCong { get; set; }
+        [Display(Name = "Mã Ngành")]
+        public string maNganh { get; set; }
         public enum Gender
         {
             Male = 0,
             Female = 1
             // Các giá trị khác nếu có
         }
-        public Student(string maSV, string hoTen, Gender gioiTinh, string ngaySinh, int soDiemCong)
+        public Student(string maSV, string hoTen, Gender gioiTinh, string ngaySinh, int soDiemCong, string maNganh)
         {
             this.maSV = maSV;
             this.hoTen = hoTen;
             this.gioiTinh = gioiTinh;
             this.ngaySinh = DateTime.ParseExact(ngaySinh, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             this.soDiemCong = soDiemCong;
+            this.maNganh = maNganh;
         }
         public Student() { 
         }

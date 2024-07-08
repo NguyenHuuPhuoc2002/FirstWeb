@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var majors = ViewBag.Majors as IEnumerable<FirstWeb.Models.Major>;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,7 +24,7 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-                    <li><a asp-controller ="GioHang" asp-action="GioHangView">Giỏ Hàng</a></li>
+                    <li><a asp-controller ="GioHang" asp-action="GioHangView">Giỏ Sinh Viên</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -37,7 +40,13 @@
                 <div class="sidebar">
                     <table class="table table-hover">
                         <tbody>
-                            <tr>
+                            @foreach (var major in majors)
+                            {
+                                <tr>
+                                    <td><a asp-controller="GioHang" asp-action="GioHangView">@major.tenNganh</a></td>
+                                </tr>
+                            }
+                            @* <tr>
                                 <td><a href="#news">Công Nghệ Thông Tin</a></td>
                             </tr>
                             <tr>
@@ -45,7 +54,7 @@
                             </tr>
                             <tr>
                                 <td><a href="#about">Vật Lý</a></td>
-                            </tr>
+                            </tr> *@
                         </tbody>
                     </table>
                 </div>

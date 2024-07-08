@@ -1,5 +1,6 @@
 ﻿using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
 using FirstWeb.Models;
+using FirstWeb.Repositories;
 using FirstWeb.Views;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +11,16 @@ namespace FirstWeb
     public class StudentController : Controller
     {
         private readonly IStudentRepository<Student> _studentRepository;
-        public StudentController(IStudentRepository<Student> studentRepository)
+        private readonly IMajorRepository<Major> _majorRepository;
+        public StudentController(IStudentRepository<Student> studentRepository, IMajorRepository<Major> majorRepository)
         {
             this._studentRepository = studentRepository;
+            this._majorRepository = majorRepository;
         }
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.Majors = await _majorRepository.GetNganh();
             return View();
         }
 
@@ -24,7 +28,7 @@ namespace FirstWeb
         public async Task<ActionResult> GetStudents()
         {
             IEnumerable<Student> students = await _studentRepository.GetAllAsync();
-
+            ViewBag.Majors = await _majorRepository.GetNganh();
             // Chuyển đổi IEnumerable<Student> sang List<Student>
             List<Student> studentList = students.ToList();
 
@@ -35,6 +39,7 @@ namespace FirstWeb
         // GET: HomeController1/Details/5
         public async Task<ActionResult> Details(string maSV)
         {
+            ViewBag.Majors = await _majorRepository.GetNganh();
             if (string.IsNullOrEmpty(maSV))
             {
                 return RedirectToAction("Index", "Home");
@@ -48,21 +53,22 @@ namespace FirstWeb
         }
 
         // GET: HomeController1/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            ViewBag.Majors = await _majorRepository.GetNganh();
             return View();
         }
 
         // POST: HomeController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("maSV,hoTen,gioiTinh,ngaySinh")] Student student)
+        public async Task<ActionResult> Create([Bind("maSV,hoTen,gioiTinh,ngaySinh, soDiemCong, maNganh")] Student student)
         {
             if (ModelState.IsValid)
             {
                 await _studentRepository.AddAsync(student);
                 // Redirect to GetStudents action to show the updated list of students
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             return View(student);
         }
@@ -70,6 +76,7 @@ namespace FirstWeb
         // GET: HomeController1/Edit/5
         public async Task<ActionResult> Edit(string maSV)
         {
+            ViewBag.Majors = await _majorRepository.GetNganh();
             if (maSV == null)
             {
                 return NotFound();
@@ -86,7 +93,7 @@ namespace FirstWeb
         // POST: HomeController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind("maSV,hoTen,gioiTinh,ngaySinh,soDiemCong")] Student student)
+        public async Task<ActionResult> Edit([Bind("maSV,hoTen,gioiTinh,ngaySinh,soDiemCong,maNganh")] Student student)
         {
             try
             {
@@ -96,16 +103,18 @@ namespace FirstWeb
                 }
                 return RedirectToAction("Index", "Home");
             }
-            catch
+            catch (Exception ex)
             {
-                return View(student);
+                ModelState.AddModelError("", $"An error occurred: {ex.Message}");
             }
+            return View();
         }
-        
+
 
         // GET: HomeController1/Delete/5
         public async Task<IActionResult> Delete([Bind("maSV")] string maSV)
         {
+            ViewBag.Majors = await _majorRepository.GetNganh();
             if (string.IsNullOrEmpty(maSV))
             {
                 return RedirectToAction(nameof(Delete));
@@ -132,7 +141,7 @@ namespace FirstWeb
             }
             catch
             {
-                
+
                 return View(maSV);
             }
         }

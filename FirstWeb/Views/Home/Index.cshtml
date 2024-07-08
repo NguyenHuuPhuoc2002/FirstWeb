@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.soDiemCong)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.maNganh)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -45,6 +48,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.soDiemCong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.maNganh)
                 </td>
                 <td>
                     <a asp-controller="Student" asp-action="Edit" asp-route-maSV="@item.maSV">Edit</a> |

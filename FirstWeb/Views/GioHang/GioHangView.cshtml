@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FirstWeb.Models.Student>
 
 @{
-    ViewData["Title"] = "Danh sách sinh viên trong giỏ hàng";
+    ViewData["Title"] = "Danh sách sinh viên trong giỏ ";
 }
    
 
@@ -27,6 +27,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.First().soDiemCong)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().maNganh)
+                </th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -49,9 +52,12 @@
                     <td>
                         <form asp-controller="GioHang" asp-action="UpdatePoint" method="post">
                             <input type="hidden" name="maSV" value="@item.maSV" />
-                            <input type="number" name="soDiemCong" style="width: 40px" value="@item.soDiemCong" />
+                            <input type="number" name="soDiemCong" style="width: 40px" value="@item.soDiemCong" min="1" />
                                 <button type="submit" >+</button>
                         </form>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.maNganh)
                     </td>
                     <td>
                         <form asp-controller="GioHang" asp-action="Delete" method="post">
@@ -66,7 +72,7 @@
 }
 else
 {
-    <p>Không có sinh viên nào trong giỏ hàng.</p>
+    <p>Không có sinh viên nào trong giỏ .</p>
 }
 
 <div>

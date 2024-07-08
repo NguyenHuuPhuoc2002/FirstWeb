@@ -18,15 +18,16 @@ namespace FirstWeb.Repositories
         }
         public async Task AddAsync(Student entity)
         {
-            var query = @"INSERT INTO Students(MaSV, HoTen, GioiTinh, NgaySinh, SoDiemCong)
-                        VALUES (@MaSV, @HoTen, @GioiTinh, @NgaySinh, @SoDiemCong)";
+            var query = @"INSERT INTO Students(MaSV, HoTen, GioiTinh, NgaySinh, SoDiemCong, MaNganh)
+                        VALUES (@MaSV, @HoTen, @GioiTinh, @NgaySinh, @SoDiemCong, @MaNganh)";
             var parameters = new
             {
                 MaSV = entity.maSV,
                 HoTen = entity.hoTen,
                 GioiTinh = entity.gioiTinh,
                 NgaySinh = entity.ngaySinh,
-                SoDiemCong = entity.soDiemCong
+                SoDiemCong = entity.soDiemCong,
+                maNganh = entity.maNganh
             };
             await _connection.ExecuteAsync(query, parameters);
         }
@@ -61,14 +62,16 @@ namespace FirstWeb.Repositories
                             SET HoTen = @hoTen,
                                 GioiTinh = @gioiTinh, 
                                 NgaySinh = @ngaySinh,
-                                SoDiemCong = @soDiemCong
-                            Where MaSV = @maSV";
+                                SoDiemCong = @soDiemCong,
+                                MaNganh = @maNganh
+                            WHERE MaSV = @maSV";
             var parameter = new
             {
                 hoTen = entity.hoTen,
                 gioiTinh = entity.gioiTinh,
                 ngaySinh = entity.ngaySinh,
                 soDiemCong = entity.soDiemCong,
+                maNganh = entity.maNganh,
                 maSV = entity.maSV
             };
             await _connection.ExecuteAsync(query, parameter);
