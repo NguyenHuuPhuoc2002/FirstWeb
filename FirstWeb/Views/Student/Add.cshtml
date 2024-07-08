@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Student>
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Students in Session</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().maSV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().hoTen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().gioiTinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().ngaySinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().soDiemCong)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.maSV)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gioiTinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ngaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.soDiemCong)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

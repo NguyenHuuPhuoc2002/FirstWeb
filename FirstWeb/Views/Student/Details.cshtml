@@ -1,0 +1,61 @@
+﻿@model FirstWeb.Models.Student
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.maSV)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.maSV)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.hoTen)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.hoTen)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.gioiTinh)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.gioiTinh)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ngaySinh)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.ngaySinh)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.soDiemCong)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.soDiemCong)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { maSV = Model.maSV })|
+
+
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
+</div>
