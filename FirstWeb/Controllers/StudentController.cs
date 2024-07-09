@@ -62,14 +62,14 @@ namespace FirstWeb
         // POST: HomeController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("maSV,hoTen,gioiTinh,ngaySinh, soDiemCong, maNganh")] Student student)
+        public async Task<ActionResult> Create(Student student)
         {
             if (ModelState.IsValid)
             {
                 await _studentRepository.AddAsync(student);
                 return RedirectToAction("Index", "Home");
             }
-            return View(student);
+            return View();
         }
 
         // GET: HomeController1/Edit/5
@@ -86,13 +86,14 @@ namespace FirstWeb
             {
                 return NotFound();
             }
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
             return View(student);
         }
 
         // POST: HomeController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind("maSV,hoTen,gioiTinh,ngaySinh,soDiemCong,maNganh")] Student student)
+        public async Task<ActionResult> Edit(Student student)
         {
             try
             {
