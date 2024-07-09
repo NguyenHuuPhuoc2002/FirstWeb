@@ -18,7 +18,6 @@ namespace FirstWeb.Controllers
         public async Task<IActionResult> LichSuView()
         {
             IEnumerable<Student> students = await _studentRepository.GetAllAsync();
-            HttpContext.Session.Remove("Students");
             ViewBag.Majors = await _majorRepository.GetNganhAsync();
             return View(students);
         }

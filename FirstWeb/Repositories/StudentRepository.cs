@@ -56,11 +56,19 @@ namespace FirstWeb.Repositories
             return await _connection.QuerySingleOrDefaultAsync<Student>(query, parameter);
         }
 
-        public async Task<IEnumerable<Student>> GetSearchAsync(string maNganh)
+        public async Task<IEnumerable<Student>> GetSearchMaNganhAsync(string maNganh)
         {
             var query = "SELECT * FROM Students WHERE MaNganh = @maNganh";
             var parameters = new { maNganh = maNganh };
-            var students = await _connection.QueryAsync<Student>(query, parameters);
+            var majors = await _connection.QueryAsync<Student>(query, parameters);
+            return majors.ToList();
+        }
+
+        public async Task<IEnumerable<Student>> GetSearchNameAsync(string name)
+        {
+            var query = "SELECT * FROM Students WHERE HoTen LIKE '%' + @name + '%'";
+            var parameter = new { name = name };
+            var students = await _connection.QueryAsync<Student>(query, parameter);
             return students.ToList();
         }
 
@@ -83,6 +91,6 @@ namespace FirstWeb.Repositories
                 maSV = entity.maSV
             };
             await _connection.ExecuteAsync(query, parameter);
-        }
+        } 
     }
 }

@@ -31,3 +31,7 @@ html {
 .navbar .nav-link {
     color: #007bff; /* Màu chữ */
 }
+
+.centered-form {
+    margin-top: 7px;
+}

@@ -67,7 +67,6 @@ namespace FirstWeb
             if (ModelState.IsValid)
             {
                 await _studentRepository.AddAsync(student);
-                // Redirect to GetStudents action to show the updated list of students
                 return RedirectToAction("Index", "Home");
             }
             return View(student);

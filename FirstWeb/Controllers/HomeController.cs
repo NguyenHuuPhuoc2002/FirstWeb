@@ -2,6 +2,7 @@
 using FirstWeb.Views;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace FirstWeb.Controllers
 {
@@ -17,14 +18,19 @@ namespace FirstWeb.Controllers
             this._majorRepository = majorRepository;
         }
 
-        public async Task<IActionResult> Index(string maNganh)
+        public async Task<IActionResult> Index([Bind("maNganh, tenNganh")] string maNganh, string tenNganh)
         {
-            IEnumerable<Student> students;
             /*var majors = await _studentRepository.GetSearchAsync(maNganh);
             IEnumerable<Student> students = await _studentRepository.GetAllAsync();*/
+            IEnumerable<Student> students;
+
             if (!string.IsNullOrEmpty(maNganh))
             {
-                students = await _studentRepository.GetSearchAsync(maNganh); // Thay thế bằng phương thức thích hợp trong repository của bạn
+                students = await _studentRepository.GetSearchMaNganhAsync(maNganh);
+            }
+            else if (!string.IsNullOrEmpty(tenNganh))
+            {
+                students = await _studentRepository.GetSearchNameAsync(tenNganh);
             }
             else
             {
