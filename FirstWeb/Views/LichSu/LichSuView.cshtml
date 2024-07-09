@@ -1,0 +1,62 @@
+﻿@model IEnumerable<FirstWeb.Models.Student>
+
+@{
+    ViewData["Title"] = "LichSuView";
+}
+
+<h1>Danh sách sinh viên bị đuổi học</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.maSV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hoTen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gioiTinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ngaySinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.soDiemCong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.maNganh)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.maSV)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gioiTinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ngaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.soDiemCong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.maNganh)
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-controller="Home" asp-action="Index">Quay lại trang đầu</a>
+</div>

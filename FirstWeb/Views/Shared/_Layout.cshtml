@@ -25,6 +25,7 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
                     <li><a asp-controller ="GioHang" asp-action="GioHangView">Giỏ Sinh Viên</a></li>
+                    <li><a asp-controller ="LichSu" asp-action="LichSuView">Lịch sử</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -43,9 +44,13 @@
                             @foreach (var major in majors)
                             {
                                 <tr>
-                                    <td><a asp-controller="GioHang" asp-action="GioHangView">@major.tenNganh</a></td>
+                                    <td>
+                                        <a asp-controller="Home" asp-action="Index" asp-route-maNganh="@major.maNganh">
+                                            @major.tenNganh
+                                        </a>
+                                    </td>
                                 </tr>
-                            }
+                            } 
                             @* <tr>
                                 <td><a href="#news">Công Nghệ Thông Tin</a></td>
                             </tr>

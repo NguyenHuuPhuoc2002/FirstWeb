@@ -3,6 +3,6 @@
     public interface IMajorRepository<T>
     {
         Task<T> GetByIdAsync(string id);
-        Task<IEnumerable<T>> GetNganh();
+        Task<IEnumerable<T>> GetNganhAsync();
     }
 }

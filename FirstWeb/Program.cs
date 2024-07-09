@@ -28,6 +28,7 @@ namespace FirstWeb
             // Đăng ký EmployeeRepository với Dependency Injection container
             builder.Services.AddSingleton<IStudentRepository<Student>, StudentRepository>();
             builder.Services.AddSingleton<IMajorRepository<Major>, MajorRepository>();
+            builder.Services.AddScoped<IHistoryRepository<Student>, HistoryRepository>();
 
             var app = builder.Build();
 

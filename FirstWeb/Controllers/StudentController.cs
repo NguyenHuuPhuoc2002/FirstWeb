@@ -20,7 +20,7 @@ namespace FirstWeb
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.Majors = await _majorRepository.GetNganh();
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
             return View();
         }
 
@@ -28,7 +28,7 @@ namespace FirstWeb
         public async Task<ActionResult> GetStudents()
         {
             IEnumerable<Student> students = await _studentRepository.GetAllAsync();
-            ViewBag.Majors = await _majorRepository.GetNganh();
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
             // Chuyển đổi IEnumerable<Student> sang List<Student>
             List<Student> studentList = students.ToList();
 
@@ -39,7 +39,7 @@ namespace FirstWeb
         // GET: HomeController1/Details/5
         public async Task<ActionResult> Details(string maSV)
         {
-            ViewBag.Majors = await _majorRepository.GetNganh();
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
             if (string.IsNullOrEmpty(maSV))
             {
                 return RedirectToAction("Index", "Home");
@@ -55,7 +55,7 @@ namespace FirstWeb
         // GET: HomeController1/Create
         public async Task<ActionResult> Create()
         {
-            ViewBag.Majors = await _majorRepository.GetNganh();
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
             return View();
         }
 
@@ -76,7 +76,7 @@ namespace FirstWeb
         // GET: HomeController1/Edit/5
         public async Task<ActionResult> Edit(string maSV)
         {
-            ViewBag.Majors = await _majorRepository.GetNganh();
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
             if (maSV == null)
             {
                 return NotFound();
@@ -114,7 +114,7 @@ namespace FirstWeb
         // GET: HomeController1/Delete/5
         public async Task<IActionResult> Delete([Bind("maSV")] string maSV)
         {
-            ViewBag.Majors = await _majorRepository.GetNganh();
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
             if (string.IsNullOrEmpty(maSV))
             {
                 return RedirectToAction(nameof(Delete));

@@ -5,10 +5,13 @@
 }
    
 
-<h1>Danh sách sinh viên trong giỏ hàng</h1>
+<h1>Danh sách sinh viên trong giỏ</h1>
 
 @if (Model != null && Model.Any())
 {
+    <form asp-controller="GioHang" asp-action="ClearAll" method="post">
+        <button type="submit" class="w3-button w3-green w3-border">Clear All</button>
+    </form>
     <table class="table">
         <thead>
             <tr>
@@ -69,6 +72,9 @@
             }
         </tbody>
     </table>
+    <form asp-controller="LichSu" asp-action="AddHistory" method="post">
+        <button type="submit" class="w3-button w3-green w3-border">Đuổi học</button>
+    </form>
 }
 else
 {

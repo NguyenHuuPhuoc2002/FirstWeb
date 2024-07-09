@@ -56,6 +56,14 @@ namespace FirstWeb.Repositories
             return await _connection.QuerySingleOrDefaultAsync<Student>(query, parameter);
         }
 
+        public async Task<IEnumerable<Student>> GetSearchAsync(string maNganh)
+        {
+            var query = "SELECT * FROM Students WHERE MaNganh = @maNganh";
+            var parameters = new { maNganh = maNganh };
+            var students = await _connection.QueryAsync<Student>(query, parameters);
+            return students.ToList();
+        }
+
         public async Task UpdateAsync(Student entity)
         {
             var query = @"UPDATE Students 

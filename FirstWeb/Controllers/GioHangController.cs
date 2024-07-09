@@ -26,7 +26,7 @@ namespace FirstWeb.Controllers
         {
             // Lấy danh sách sinh viên từ session
             var students = HttpContext.Session.GetObjectFromJson<List<Student>>("Students") ?? new List<Student>();
-            ViewBag.Majors = await _majorRepository.GetNganh();
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
             return View(students);
         }
 
@@ -110,6 +110,14 @@ namespace FirstWeb.Controllers
                     HttpContext.Session.SetObjectAsJson("Students", students);
                 }
             }
+            return RedirectToAction("GioHangView");
+        }
+
+        [HttpPost, ActionName("ClearAll")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ClearAll()
+        {
+            HttpContext.Session.Remove("Students"); 
             return RedirectToAction("GioHangView");
         }
 

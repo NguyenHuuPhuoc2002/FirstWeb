@@ -21,7 +21,7 @@ namespace FirstWeb.Repositories
             return await _connection.QuerySingleOrDefaultAsync<Major>(query, parameter);
         }
 
-        public async Task<IEnumerable<Major>> GetNganh()
+        public async Task<IEnumerable<Major>> GetNganhAsync()
         {
             var query = "SELECT * FROM Majors";
             var result = await _connection.QueryAsync<Major>(query);

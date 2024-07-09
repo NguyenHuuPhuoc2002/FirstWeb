@@ -1,4 +1,4 @@
-using FirstWeb.Models;
+﻿using FirstWeb.Models;
 using FirstWeb.Views;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -17,11 +17,20 @@ namespace FirstWeb.Controllers
             this._majorRepository = majorRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string maNganh)
         {
-           
-            IEnumerable<Student> students = await _studentRepository.GetAllAsync();
-            ViewBag.Majors = await _majorRepository.GetNganh();
+            IEnumerable<Student> students;
+            /*var majors = await _studentRepository.GetSearchAsync(maNganh);
+            IEnumerable<Student> students = await _studentRepository.GetAllAsync();*/
+            if (!string.IsNullOrEmpty(maNganh))
+            {
+                students = await _studentRepository.GetSearchAsync(maNganh); // Thay thế bằng phương thức thích hợp trong repository của bạn
+            }
+            else
+            {
+                students = await _studentRepository.GetAllAsync();
+            }
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
             return View(students);
         }
 
