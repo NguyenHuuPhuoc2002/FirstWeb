@@ -11,6 +11,7 @@ namespace FirstWeb.Models
         [Display(Name = "Giới Tính")]
         public Gender gioiTinh { get; set; }
         [Display(Name = "Ngày Sinh")]
+        [DataType(DataType.Date)]
         public DateTime ngaySinh { get; set; }
         [Display(Name = "Số Điểm Cộng")]
         public int soDiemCong { get; set; }
@@ -22,12 +23,12 @@ namespace FirstWeb.Models
             Female = 1
             // Các giá trị khác nếu có
         }
-        public Student(string maSV, string hoTen, Gender gioiTinh, string ngaySinh, int soDiemCong, string maNganh)
+        public Student(string maSV, string hoTen, Gender gioiTinh, DateTime ngaySinh, int soDiemCong, string maNganh)
         {
             this.maSV = maSV;
             this.hoTen = hoTen;
             this.gioiTinh = gioiTinh;
-            this.ngaySinh = DateTime.ParseExact(ngaySinh, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            this.ngaySinh = ngaySinh;
             this.soDiemCong = soDiemCong;
             this.maNganh = maNganh;
         }

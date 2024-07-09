@@ -31,6 +31,7 @@ namespace FirstWeb.Controllers
             else if (!string.IsNullOrEmpty(tenNganh))
             {
                 students = await _studentRepository.GetSearchNameAsync(tenNganh);
+                ViewBag.Search = tenNganh;
             }
             else
             {

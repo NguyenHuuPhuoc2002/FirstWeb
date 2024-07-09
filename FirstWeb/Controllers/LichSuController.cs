@@ -23,14 +23,14 @@ namespace FirstWeb.Controllers
         }
         [HttpPost, ActionName("AddHistory")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddHistory([Bind("maSV,hoTen,gioiTinh,ngaySinh, soDiemCong, maNganh")] Student student)
+        public async Task<IActionResult> AddHistory(Student student)
         {
             List<Student> students = HttpContext.Session.GetObjectFromJson<List<Student>>("Students") ?? new List<Student>();
             foreach (var item in students)
             {
                 await _studentRepository.AddAsync(item);
             }
-
+            HttpContext.Session.Remove("Students");
             return RedirectToAction("LichSuView");
         }
 

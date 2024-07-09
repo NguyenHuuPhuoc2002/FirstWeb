@@ -1,10 +1,10 @@
 ﻿@model FirstWeb.Models.Student
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Thêm Mới Sinh Viên";
 }
 
-<h1>Index</h1>
+<h1>Thêm Mới Sinh Viên</h1>
 
 <h4>Student</h4>
 <hr />
@@ -24,8 +24,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="gioiTinh" class="control-label"></label>
-                <input asp-for="gioiTinh" class="form-control" />
-                <span asp-validation-for="gioiTinh" class="text-danger"></span>
+                <select asp-for="gioiTinh" class="form-control">
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="ngaySinh" class="control-label"></label>
@@ -39,8 +41,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="maNganh" class="control-label"></label>
-                <input asp-for="maNganh" class="form-control" />
-                <span asp-validation-for="maNganh" class="text-danger"></span>
+                <select asp-for="maNganh" class="form-control">
+                    @foreach (var item in ViewBag.Majors)
+                    {
+                        <option>@item.maNganh</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
