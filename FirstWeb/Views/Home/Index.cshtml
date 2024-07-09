@@ -8,6 +8,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.image)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.maSV)
             </th>
             <th>
@@ -32,6 +35,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    <img src="~/@item.image" style="width: 100px; height: 100px" />
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.maSV)
                 </td>

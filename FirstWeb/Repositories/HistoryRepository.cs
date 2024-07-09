@@ -18,7 +18,7 @@ namespace FirstWeb.Repositories
         public async Task AddAsync(Student entity)
         {
             var query = @"INSERT INTO History(MaSV, HoTen, GioiTinh, NgaySinh, SoDiemCong, MaNganh)
-                        VALUES (@MaSV, @HoTen, @GioiTinh, @NgaySinh, @SoDiemCong, @MaNganh)";
+                        VALUES (@MaSV, @HoTen, @GioiTinh, @NgaySinh,@SoDiemCong, @MaNganh)";
             var parameters = new
             {
                 MaSV = entity.maSV,

@@ -2,10 +2,8 @@
 using System.Globalization;
 namespace FirstWeb.Models
 {
-    public class Student
+    public class History
     {
-        [Display(Name = "Ảnh")]
-        public string image { get; set; }
         [Display(Name = "Mã SV")]
         public string maSV { get; set; }
         [Display(Name = "Họ Tên")]
@@ -15,8 +13,7 @@ namespace FirstWeb.Models
         [Display(Name = "Ngày Sinh")]
         [DataType(DataType.Date)]
         public DateTime ngaySinh { get; set; }
-        [Display(Name = "Số Điểm Cộng")]
-        public int soDiemCong { get; set; }
+
         [Display(Name = "Mã Ngành")]
         public string maNganh { get; set; }
         public enum Gender
@@ -25,20 +22,18 @@ namespace FirstWeb.Models
             Female = 1
             // Các giá trị khác nếu có
         }
-        public Student(string image, string maSV, string hoTen, Gender gioiTinh, DateTime ngaySinh, int soDiemCong, string maNganh)
+        public History(string maSV, string hoTen, Gender gioiTinh, DateTime ngaySinh, int soDiemCong, string maNganh)
         {
-            this.image = image;
             this.maSV = maSV;
             this.hoTen = hoTen;
             this.gioiTinh = gioiTinh;
             this.ngaySinh = ngaySinh;
-            this.soDiemCong = soDiemCong;
             this.maNganh = maNganh;
         }
-        public Student() {
-            
+        public History()
+        {
         }
 
-  
+
     }
 }

@@ -18,10 +18,11 @@ namespace FirstWeb.Repositories
         }
         public async Task AddAsync(Student entity)
         {
-            var query = @"INSERT INTO Students(MaSV, HoTen, GioiTinh, NgaySinh, SoDiemCong, MaNganh)
-                        VALUES (@MaSV, @HoTen, @GioiTinh, @NgaySinh, @SoDiemCong, @MaNganh)";
+            var query = @"INSERT INTO Students(Image, MaSV, HoTen, GioiTinh, NgaySinh, SoDiemCong, MaNganh)
+                        VALUES (@Image, @MaSV, @HoTen, @GioiTinh, @NgaySinh, @SoDiemCong, @MaNganh)";
             var parameters = new
             {
+                Image = entity.image,
                 MaSV = entity.maSV,
                 HoTen = entity.hoTen,
                 GioiTinh = entity.gioiTinh,
@@ -75,7 +76,8 @@ namespace FirstWeb.Repositories
         public async Task UpdateAsync(Student entity)
         {
             var query = @"UPDATE Students 
-                            SET HoTen = @hoTen,
+                            SET Image = @image
+                                HoTen = @hoTen,
                                 GioiTinh = @gioiTinh, 
                                 NgaySinh = @ngaySinh,
                                 SoDiemCong = @soDiemCong,
@@ -83,6 +85,7 @@ namespace FirstWeb.Repositories
                             WHERE MaSV = @maSV";
             var parameter = new
             {
+                Image = entity.image,
                 hoTen = entity.hoTen,
                 gioiTinh = entity.gioiTinh,
                 ngaySinh = entity.ngaySinh,
