@@ -72,47 +72,6 @@ namespace FirstWeb.Controllers
             return RedirectToAction("GioHangView");
         }
 
-        public IActionResult UpdatePoint()
-        {
-            return View();
-        }
-
-        [HttpPost, ActionName("UpdatePoint")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdatePoint([Bind("maSV,soDiemCong")] string maSV, int soDiemCong)
-        {
-            List<Student> students = HttpContext.Session.GetObjectFromJson<List<Student>>("Students") ?? new List<Student>();
-
-            if (students.Any(s => s.maSV == maSV))
-            {
-                var studentFirst = students.FirstOrDefault(s => s.maSV == maSV);
-                if (studentFirst != null)
-                {
-                    studentFirst.soDiemCong = soDiemCong; // Đổi tên thành "A"
-                    HttpContext.Session.SetObjectAsJson("Students", students);
-                }
-            }
-            return RedirectToAction("GioHangView");
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete([Bind("maSV")] string maSV)
-        {
-            List<Student> students = HttpContext.Session.GetObjectFromJson<List<Student>>("Students") ?? new List<Student>();
-
-            if (students.Any(s => s.maSV == maSV))
-            {
-                var studentFirst = students.FirstOrDefault(s => s.maSV == maSV);
-                if (studentFirst != null)
-                {
-                    students.Remove(studentFirst);
-                    HttpContext.Session.SetObjectAsJson("Students", students);
-                }
-            }
-            return RedirectToAction("GioHangView");
-        }
-
         [HttpPost, ActionName("ClearAll")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ClearAll()
