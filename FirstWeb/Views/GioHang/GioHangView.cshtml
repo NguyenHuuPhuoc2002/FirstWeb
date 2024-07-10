@@ -10,11 +10,15 @@
 @if (Model != null && Model.Any())
 {
     <form asp-controller="GioHang" asp-action="ClearAll" method="post">
-        <button type="submit" class="w3-button w3-green w3-border">Clear All</button>
+        <button type="submit" class="btn btn-danger btn-white">Clear All</button>
     </form>
+   
     <table class="table">
         <thead>
             <tr>
+                <th>
+                   
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.First().image)
                 </th>
@@ -40,9 +44,15 @@
             </tr>
         </thead>
         <tbody>
+        <form asp-controller="XoaSua" asp-action="XoaSua" method="post">
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        <div style="margin-left: 20px">
+                            <input type="checkbox" name="c1" value="@item.maSV">
+                        </div>
+                    </td>
                     <td>
                         <img src="~/@item.image" style="width: 100px; height: 100px" />
                     </td>
@@ -59,28 +69,28 @@
                         @Html.DisplayFor(modelItem => item.ngaySinh)
                     </td>
                     <td>
-                        <form asp-controller="GioHang" asp-action="UpdatePoint" method="post">
-                            <input type="hidden" name="maSV" value="@item.maSV" />
-                            <input type="number" name="soDiemCong" style="width: 40px" value="@item.soDiemCong" min="1" />
-                                <button type="submit" >+</button>
-                        </form>
+                         @Html.DisplayFor(modelItem => item.soDiemCong)
+                        <input type="number" name="soDiemCong" value="@item.maSV" style="width: 40px" min="1" />
+                        <button type="submit" name="Sua" value="@item.maSV">+</button>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.maNganh)
                     </td>
                     <td>
-                        <form asp-controller="GioHang" asp-action="Delete" method="post">
-                            <input type="hidden" name="maSV" value="@item.maSV" />
-                                <button type="submit" class="w3-button w3-red w3-border">Delete</button>
-                        </form>
+                        <button type="submit" name="Xoa" value="@item.maSV" class="w3-button w3-red w3-border">Delete</button>
                     </td>
                 </tr>
             }
+            <div class="cart-footer" style="margin-top: 10px">
+                <button type="submit" name="xoachon" class="btn btn-danger btn-white ">Xóa Chọn</button>
+            </div>
+        </form>
         </tbody>
     </table>
     <form asp-controller="LichSu" asp-action="AddHistory" method="post">
         <button type="submit" class="w3-button w3-green w3-border">Đuổi học</button>
     </form>
+
 }
 else
 {

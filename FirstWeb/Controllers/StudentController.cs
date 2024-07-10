@@ -173,5 +173,7 @@ namespace FirstWeb
             await _studentRepository.DeleteAsync(maSV);
             return RedirectToAction("Index", "Home");
         }
+
+
     }
 }
