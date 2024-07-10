@@ -21,11 +21,10 @@ html {
     position: relative;
     min-height: 100%;
 }
-.navbar{
+.navbar {
     position: fixed;
     min-width: 100%;
-    
-
+    z-index: 1000;
 }
 .navbar .navbar-brand,
 .navbar .nav-link {

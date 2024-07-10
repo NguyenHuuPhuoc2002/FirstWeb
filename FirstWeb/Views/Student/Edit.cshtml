@@ -9,7 +9,14 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" method="post">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="image" class="control-label"></label>
+                <img src="/@Model.image" style="width: 100px; height: 100px" id="previewImage" />
+                <input type="file" name="ImageUpload" onchange="ShowImagePreView(this, document.getElementById('previewImage'))" />
+                <span asp-validation-for="image" class="text-danger"></span>
+            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="maSV" class="control-label"></label>

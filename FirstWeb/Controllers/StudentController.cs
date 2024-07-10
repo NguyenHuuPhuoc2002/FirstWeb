@@ -13,11 +13,13 @@ namespace FirstWeb
         private readonly IStudentRepository<Student> _studentRepository;
         private readonly IMajorRepository<Major> _majorRepository;
         private readonly IHistoryRepository<Student> _historyRepository;
-        public StudentController(IStudentRepository<Student> studentRepository, IMajorRepository<Major> majorRepository, IHistoryRepository<Student> historyRepository)
+        private readonly IWebHostEnvironment _environment;
+        public StudentController(IWebHostEnvironment environment, IStudentRepository<Student> studentRepository, IMajorRepository<Major> majorRepository, IHistoryRepository<Student> historyRepository)
         {
             this._studentRepository = studentRepository;
             this._majorRepository = majorRepository;
             this._historyRepository = historyRepository;
+            this._environment = environment;
         }
 
         public async Task<IActionResult> Index()
@@ -57,8 +59,9 @@ namespace FirstWeb
         // GET: HomeController1/Create
         public async Task<ActionResult> Create()
         {
+            Student student = new Student();
             ViewBag.Majors = await _majorRepository.GetNganhAsync();
-            return View();
+            return View(student);
         }
 
         // POST: HomeController1/Create
@@ -68,6 +71,25 @@ namespace FirstWeb
         {
             if (ModelState.IsValid)
             {
+                if (student.ImageUpload != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(student.ImageUpload.FileName);
+                    string extension = Path.GetExtension(student.ImageUpload.FileName);
+                    fileName = fileName + extension;
+
+                    // Tạo đường dẫn tuyệt đối tới thư mục lưu file trên server
+                    string filePath = Path.Combine(_environment.WebRootPath, "anh", fileName);
+
+                    // Lưu file lên server
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await student.ImageUpload.CopyToAsync(stream);
+                    }
+
+                    // Lưu đường dẫn tương đối của file vào thuộc tính Image của student
+                    student.image = "anh/" + fileName;
+
+                }
                 await _studentRepository.AddAsync(student);
                 return RedirectToAction("Index", "Home");
             }
@@ -97,18 +119,30 @@ namespace FirstWeb
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Student student)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                if (student.ImageUpload != null)
                 {
-                    await _studentRepository.UpdateAsync(student);
+                    string fileName = Path.GetFileNameWithoutExtension(student.ImageUpload.FileName);
+                    string extension = Path.GetExtension(student.ImageUpload.FileName);
+                    fileName = fileName + extension;
+
+                    // Tạo đường dẫn tuyệt đối tới thư mục lưu file trên server
+                    string filePath = Path.Combine(_environment.WebRootPath, "anh", fileName);
+
+                    // Lưu file lên server
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await student.ImageUpload.CopyToAsync(stream);
+                    }
+
+                    // Lưu đường dẫn tương đối của file vào thuộc tính Image của student
+                    student.image = "anh/" + fileName;
+
                 }
+                await _studentRepository.UpdateAsync(student);
                 return RedirectToAction("Index", "Home");
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", $"An error occurred: {ex.Message}");
-            }
+            }  
             return View();
         }
 

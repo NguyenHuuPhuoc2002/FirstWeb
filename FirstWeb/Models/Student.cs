@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 namespace FirstWeb.Models
 {
@@ -19,11 +21,12 @@ namespace FirstWeb.Models
         public int soDiemCong { get; set; }
         [Display(Name = "Mã Ngành")]
         public string maNganh { get; set; }
+        [NotMapped]
+        public IFormFile ImageUpload { get; set; }
         public enum Gender
         {
             Male = 0,
             Female = 1
-            // Các giá trị khác nếu có
         }
         public Student(string image, string maSV, string hoTen, Gender gioiTinh, DateTime ngaySinh, int soDiemCong, string maNganh)
         {
@@ -36,7 +39,8 @@ namespace FirstWeb.Models
             this.maNganh = maNganh;
         }
         public Student() {
-            
+            image = "~/anh/anh.png";
+            ngaySinh = DateTime.Today;
         }
 
   

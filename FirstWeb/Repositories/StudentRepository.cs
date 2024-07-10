@@ -76,7 +76,7 @@ namespace FirstWeb.Repositories
         public async Task UpdateAsync(Student entity)
         {
             var query = @"UPDATE Students 
-                            SET Image = @image
+                            SET Image = @image,
                                 HoTen = @hoTen,
                                 GioiTinh = @gioiTinh, 
                                 NgaySinh = @ngaySinh,
