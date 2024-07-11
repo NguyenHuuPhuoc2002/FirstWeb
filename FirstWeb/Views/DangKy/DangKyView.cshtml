@@ -22,3 +22,9 @@
 
     <button class="btn btn-lg btn-primary btn-block btn-white" type="submit">Đăng ký</button>
 </form>
+@if (TempData["ErrorMessageRegister"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>@TempData["ErrorMessageRegister"]</strong>
+    </div>
+}

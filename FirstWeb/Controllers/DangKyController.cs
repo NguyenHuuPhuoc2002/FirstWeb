@@ -28,7 +28,11 @@ namespace FirstWeb.Controllers
                  await _loginRepository.registerUser(taiKhoan, matKhau); 
                 return RedirectToAction("DangNhapView", "DangNhap");
             }
-            return View();
+            else
+            {
+                TempData["ErrorMessageRegister"] = "Nhập đầy đủ thông tin !";
+            }
+            return RedirectToAction("DangKyView");
         }
     }
 }
