@@ -49,7 +49,7 @@ namespace FirstWeb.Controllers
             }
 
             // Lấy danh sách sinh viên từ session
-            List<Student> students = HttpContext.Session.GetObjectFromJson<List<Student>>("Students") ?? new List<Student>();
+            var students = HttpContext.Session.GetObjectFromJson<List<Student>>("Students") ?? new List<Student>();
 
             // Kiểm tra xem sinh viên đã có trong danh sách session chưa
             if (!students.Any(s => s.maSV == maSV))

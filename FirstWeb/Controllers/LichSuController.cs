@@ -21,16 +21,25 @@ namespace FirstWeb.Controllers
             ViewBag.Majors = await _majorRepository.GetNganhAsync();
             return View(students);
         }
-        [HttpPost, ActionName("AddHistory")]
+        [HttpPost, ActionName("DuoiHoc")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddHistory(Student student)
+        public async Task<IActionResult> DuoiHoc(Student student)
         {
-            List<Student> students = HttpContext.Session.GetObjectFromJson<List<Student>>("Students") ?? new List<Student>();
-            foreach (var item in students)
+            var user = HttpContext.Session.GetObjectFromJson<Login>("User");
+            if(user == null)
             {
-                await _studentRepository.AddAsync(item);
+                return RedirectToAction("DangNhapView", "DangNhap");
             }
-            HttpContext.Session.Remove("Students");
+            else
+            {
+                var students = HttpContext.Session.GetObjectFromJson<List<Student>>("Students") ?? new List<Student>();
+                foreach (var item in students)
+                {
+                    await _studentRepository.AddAsync(item);
+                }
+                HttpContext.Session.Remove("Students");
+            }
+            
             return RedirectToAction("LichSuView");
         }
 

@@ -1,5 +1,8 @@
-﻿@{
+﻿
+@{
     var majors = ViewBag.Majors as IEnumerable<FirstWeb.Models.Major>;
+    
+ 
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +14,7 @@
     <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FirstWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -20,28 +24,71 @@
 </head>
 <body >
     <header>
-        <nav class="navbar navbar-inverse" style="position: fixed; width: 100%">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">WebSiteName</a>
+        @{
+
+            var user = Context.Session.GetObjectFromJson<Login>("User");
+
+        }
+        @if(user != null)
+        {
+            <nav class="navbar navbar-inverse" style="position: fixed; width: 100%">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">WebSiteName</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                        <li><a asp-controller="GioHang" asp-action="GioHangView">Giỏ Sinh Viên</a></li>
+                        <li><a asp-controller="LichSu" asp-action="LichSuView">Lịch sử</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <form asp-controller="Home" asp-action="Index" class="form-inline centered-form" method="post">
+                                <input type="text" class="form-control" placeholder="Nhập tên cần tìm kiếm.." name="tenNganh" value="@ViewBag.Search">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </form>
+                        </li>
+                        <li>
+                            <a>
+                                Xin Chào: @user.taiKhoan
+                            </a>
+                        </li>
+                        <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Register</a></li>
+                        <li><a asp-controller="DangXuat" asp-action="DangXuat"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+                    </ul>
                 </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-                    <li><a asp-controller ="GioHang" asp-action="GioHangView">Giỏ Sinh Viên</a></li>
-                    <li><a asp-controller ="LichSu" asp-action="LichSuView">Lịch sử</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <form asp-controller="Home" asp-action="Index" class="form-inline centered-form" method="post">
-                            <input type="text" class="form-control" placeholder="Nhập tên cần tìm kiếm.." name="tenNganh" value="@ViewBag.Search">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                        </form>
-                    </li>
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                </ul>
-            </div>
-        </nav>
+            </nav>
+        }
+        else
+        {
+            <nav class="navbar navbar-inverse" style="position: fixed; width: 100%">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">WebSiteName</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                        <li><a asp-controller="GioHang" asp-action="GioHangView">Giỏ Sinh Viên</a></li>
+                        <li><a asp-controller="LichSu" asp-action="LichSuView">Lịch sử</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <form asp-controller="Home" asp-action="Index" class="form-inline centered-form" method="post">
+                                <input type="text" class="form-control" placeholder="Nhập tên cần tìm kiếm.." name="tenNganh" value="@ViewBag.Search">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </form>
+                        </li>
+                        <li>
+                            <a asp-controller="DangNhap" asp-action="DangNhapView">
+                                <span class="glyphicon glyphicon-user"></span> Login
+                            </a>
+                        </li>
+                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Register</a></li>
+                    </ul>
+                </div>
+            </nav>
+        }
+
     </header>
    
     <div class="container-fluid">

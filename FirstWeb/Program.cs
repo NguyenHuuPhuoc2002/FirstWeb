@@ -20,7 +20,7 @@ namespace FirstWeb
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.IdleTimeout = new TimeSpan(0,15,0);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
@@ -29,6 +29,7 @@ namespace FirstWeb
             builder.Services.AddSingleton<IStudentRepository<Student>, StudentRepository>();
             builder.Services.AddSingleton<IMajorRepository<Major>, MajorRepository>();
             builder.Services.AddScoped<IHistoryRepository<Student>, HistoryRepository>();
+            builder.Services.AddScoped<ILoginRepository<Login>, LoginRepository>();
 
             var app = builder.Build();
 
@@ -51,9 +52,10 @@ namespace FirstWeb
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=DangNhap}/{action=DangNhapView}/{id?}");
 
             app.Run();
         }
+
     }
 }

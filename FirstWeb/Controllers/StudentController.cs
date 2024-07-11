@@ -119,30 +119,34 @@ namespace FirstWeb
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Student student)
         {
-            if (ModelState.IsValid)
+           
+            if (student.ImageUpload != null)
             {
-                if (student.ImageUpload != null)
+                string fileName = Path.GetFileNameWithoutExtension(student.ImageUpload.FileName);
+                string extension = Path.GetExtension(student.ImageUpload.FileName);
+                fileName = fileName + extension;
+
+                // Tạo đường dẫn tuyệt đối tới thư mục lưu file trên server
+                string filePath = Path.Combine(_environment.WebRootPath, "anh", fileName);
+
+                // Lưu file lên server
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    string fileName = Path.GetFileNameWithoutExtension(student.ImageUpload.FileName);
-                    string extension = Path.GetExtension(student.ImageUpload.FileName);
-                    fileName = fileName + extension;
-
-                    // Tạo đường dẫn tuyệt đối tới thư mục lưu file trên server
-                    string filePath = Path.Combine(_environment.WebRootPath, "anh", fileName);
-
-                    // Lưu file lên server
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await student.ImageUpload.CopyToAsync(stream);
-                    }
-
-                    // Lưu đường dẫn tương đối của file vào thuộc tính Image của student
-                    student.image = "anh/" + fileName;
-
+                    await student.ImageUpload.CopyToAsync(stream);
                 }
-                await _studentRepository.UpdateAsync(student);
-                return RedirectToAction("Index", "Home");
-            }  
+
+                // Lưu đường dẫn tương đối của file vào thuộc tính Image của student
+                student.image = "anh/" + fileName;
+
+            }
+            else
+            {
+                var _sutudent = await _studentRepository.GetByIdAsync(student.maSV);
+                student.image = _sutudent.image;
+            }
+            await _studentRepository.UpdateAsync(student);
+            return RedirectToAction("Index", "Home");
+        }
 
 
         // GET: HomeController1/Delete/5
