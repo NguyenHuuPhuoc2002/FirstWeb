@@ -143,8 +143,6 @@ namespace FirstWeb
                 await _studentRepository.UpdateAsync(student);
                 return RedirectToAction("Index", "Home");
             }  
-            return View();
-        }
 
 
         // GET: HomeController1/Delete/5
