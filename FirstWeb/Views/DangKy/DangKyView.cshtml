@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Đăng Ký";
+}
+
+<form class="form-signin" asp-controller="DangKy" asp-action="DangKy" method="post">
+    @Html.AntiForgeryToken()
+
+    <h2 class="form-signin-heading">Đăng Ký</h2>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label for="txtun" class="sr-only">Username</label>
+        <input type="text" class="form-control" placeholder="Username" name="taiKhoan">
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label for="txtpass" class="sr-only">Password</label>
+        <input type="password" class="form-control" placeholder="Password" name="matKhau">
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block btn-white" type="submit">Đăng ký</button>
+</form>

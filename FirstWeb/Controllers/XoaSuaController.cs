@@ -32,10 +32,11 @@ namespace FirstWeb.Controllers
             if (!string.IsNullOrEmpty(Sua))
             {
                 string maSV = Sua;
-                var soDiemCong = int.Parse(Request.Form["soDiemCong"]);
+                int soDiemCong;
+                bool isValid = int.TryParse(Request.Form["soDiemCong"], out soDiemCong);
 
                 var student = students.FirstOrDefault(s => s.maSV == maSV);
-                if (student != null)
+                if (student != null && isValid)
                 {
                     student.soDiemCong = soDiemCong;
                     HttpContext.Session.SetObjectAsJson("Students", students);

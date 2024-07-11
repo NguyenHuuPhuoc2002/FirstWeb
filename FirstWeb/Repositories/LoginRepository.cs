@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using FirstWeb.Models;
 using FirstWeb.Views;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 
 namespace FirstWeb.Repositories
@@ -41,6 +42,19 @@ namespace FirstWeb.Repositories
             }
             return null; 
           
+        }
+
+        public async Task registerUser(string taiKhoan, string matKhau)
+        {
+            var query = "INSERT INTO Login(TenDangNhap, MatKhau, Role)" +
+                "                   VALUES(@taiKhoan, @matKhau, @role)";
+            var parameter = new
+            {
+                taiKhoan = taiKhoan,
+                matKhau = matKhau,
+                role = 1
+            };
+            await _connection.ExecuteAsync(query, parameter);
         }
     }
 }
