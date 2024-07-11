@@ -32,8 +32,16 @@ namespace FirstWeb.Controllers
 
                 if (loginResult != null)
                 {
-                    HttpContext.Session.SetObjectAsJson("User", loginResult);
-                    return RedirectToAction("Index", "Home");
+                    if(loginResult.role)
+                    {
+                        HttpContext.Session.SetObjectAsJson("User", loginResult);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetObjectAsJson("User", loginResult);
+                        return RedirectToAction("LichSuView", "LichSu");
+                    }
                 }
                 else
                 {

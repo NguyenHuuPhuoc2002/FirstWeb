@@ -3,6 +3,7 @@ using FirstWeb.Models;
 using FirstWeb.Views;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace FirstWeb.Repositories
 {
@@ -19,12 +20,13 @@ namespace FirstWeb.Repositories
 
         public async Task<Login> checkLogin(string taiKhoan, string matKhau)
         {
-            var query = "SELECT * FROM Login WHERE TenDangNhap = @tenDangNhap AND MatKhau = @matKhau AND Role = @role";
+            var query = "SELECT * FROM Login WHERE TenDangNhap = @tenDangNhap AND MatKhau = @matKhau AND (Role = @role OR Role = @role2)";
             var parameter = new
             {
                 tenDangNhap = taiKhoan,
                 matKhau = matKhau,
-                role = 1
+                role = 1,
+                role2 = 0
             };
 
             var result = await _connection.QueryFirstOrDefaultAsync(query, parameter);
@@ -36,6 +38,7 @@ namespace FirstWeb.Repositories
                 {
                     taiKhoan = result.TenDangNhap,
                     matKhau = result.MatKhau,
+                    role = result.Role
                         
                 };
                 return login;
