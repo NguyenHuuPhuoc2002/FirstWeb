@@ -53,14 +53,14 @@ namespace FirstWeb.Repositories
 
         public async Task<IEnumerable<Student>> GetAllItemAsync(int index)
         {
-            int offset = (index > 0) ? (index - 1) * 6 : 0;
-            var query = @"SELECT* FROM Students ORDER BY maSV OFFSET @Offset ROWS FETCH NEXT 6 ROWS ONLY";
+            int offset = (index > 0) ? (index - 1) * 4 : 0;
+            var query = @"SELECT* FROM Students ORDER BY maSV OFFSET @Offset ROWS FETCH NEXT 4 ROWS ONLY";
             var parameter = new { Offset = offset };
             var result = await _connection.QueryAsync<Student>(query,parameter);
             return result;
         }
 
-        public async Task<int> GetAllNumItemAsync()
+        public async Task<int> GetNumItemAsync()
         {
             var query = "SELECT COUNT(*) FROM Students";
 
@@ -114,6 +114,30 @@ namespace FirstWeb.Repositories
                 maSV = entity.maSV
             };
             await _connection.ExecuteAsync(query, parameter);
-        } 
+        }
+        public async Task<int> GetNumMarjorItemAsync(string id)
+        {
+            var query = @"SELECT COUNT(*) FROM Students WHERE MaNganh = @maNganh";
+            var parameter = new
+            {
+                maNganh = id
+            };
+            // Thực hiện truy vấn bằng Dapper
+            var result = await _connection.QueryFirstOrDefaultAsync<int>(query, parameter);
+
+            return result;
+        }
+        public async Task<IEnumerable<Student>> GetAllMajorAsync(string maNganh, int index)
+        {
+            int offset = (index > 0) ? (index - 1) * 4 : 0;
+            var query = @"SELECT * FROM Students WHERE MaNganh = @maNganh ORDER BY MaNganh OFFSET @Offset ROWS FETCH NEXT 4 ROWS ONLY";
+            var parameter = new
+            {
+                maNganh = maNganh,
+                Offset = offset
+            };
+            var result = await _connection.QueryAsync<Student>(query, parameter);
+            return result;
+        }
     }
 }

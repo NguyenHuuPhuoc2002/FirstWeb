@@ -1,0 +1,111 @@
+﻿@model IEnumerable<FirstWeb.Models.Student>
+
+@{
+    ViewData["Title"] = "Tìm kiếm";
+}
+<h1>Danh sách sinh viên Tìm kiếm </h1>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.maSV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hoTen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gioiTinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ngaySinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.soDiemCong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.maNganh)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/@item.image" style="width: 100px; height: 100px" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.maSV)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gioiTinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ngaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.soDiemCong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.maNganh)
+                </td>
+                <td>
+                    <a asp-controller="Student" asp-action="Edit" asp-route-maSV="@item.maSV">Edit</a> |
+                    <a asp-controller="Student" asp-action="Details" asp-route-maSV="@item.maSV">Details</a> |
+                    <a asp-controller="Student" asp-action="Delete" asp-route-maSV="@item.maSV">Delete</a>
+                </td>
+                <td>
+                    <form asp-controller="GioHang" asp-action="Add" method="post">
+                        <input type="hidden" name="maSV" value="@item.maSV" />
+                        <button type="submit" class="w3-button w3-green w3-border">Add</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@* <div id="pagination-container" class="pagination-container" style="display: flex;">
+    @if (TempData["endPage2"] != null)
+    {
+        var endPage = (int)TempData["endPage2"];
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link">Previous</a></li>
+                @for (int it = 1; it <= endPage; it++)
+                {
+                    <li class="page-item"><a asp-controller="TimKiemTheoMa" asp-action="TimKiemTheoMaView" asp-route-index="@it">@it</a></li>
+                }
+                <li class="page-item"><a class="page-link">Next</a></li>
+            </ul>
+        </nav>
+    }
+</div> *@
+
+<div>
+    <a asp-controller="Student" asp-action="Create">Create New Student</a>
+</div>
+
+@* <script>
+    function navigateToPage(pageIndex) {
+        // Lưu vị trí cuộn hiện tại vào localStorage
+        localStorage.setItem('scrollPosition', window.scrollY);
+        // Chuyển hướng đến trang với index
+        window.location.href = `@Url.Action("TimKiemView", "TimKiem")?index=${pageIndex}`;
+    }
+
+    // Khi trang tải lại, khôi phục vị trí cuộn từ localStorage
+    window.onload = function () {
+        var scrollPosition = localStorage.getItem('scrollPosition');
+        if (scrollPosition) {
+            window.scrollTo(0, scrollPosition);
+            localStorage.removeItem('scrollPosition');
+        }
+    };
+</script> *@
