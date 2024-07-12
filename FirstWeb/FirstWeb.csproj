@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\scriphome.js" />
     <Content Remove="wwwroot\js\script.js" />
   </ItemGroup>
 
@@ -15,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\scriphome.js" />
     <None Include="wwwroot\js\script.js" />
   </ItemGroup>
 

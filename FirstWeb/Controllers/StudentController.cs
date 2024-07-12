@@ -25,19 +25,25 @@ namespace FirstWeb
         public async Task<IActionResult> Index()
         {
             ViewBag.Majors = await _majorRepository.GetNganhAsync();
+          
             return View();
         }
 
         // GET: HomeController1/GetStudents
         public async Task<ActionResult> GetStudents()
         {
-            IEnumerable<Student> students = await _studentRepository.GetAllAsync();
-            ViewBag.Majors = await _majorRepository.GetNganhAsync();
-            // Chuyển đổi IEnumerable<Student> sang List<Student>
-            List<Student> studentList = students.ToList();
+            // var students = await _studentRepository.GetAllAsync();
+            /*var totalTask = _studentRepository.GetAllNumItemAsync();
+            var total = await totalTask;
+            var endPage = (total % 6 == 0) ? total / 6 : (total / 6) + 1;
+            var students = await _studentRepository.GetAllItemAsync(endPage);
 
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
+            TempData["endPage"] = endPage;
+            var studentList = students.ToList();*/
+           
             // Trả về view với danh sách sinh viên
-            return View(studentList);
+            return View();
         }
 
         // GET: HomeController1/Details/5

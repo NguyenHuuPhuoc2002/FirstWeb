@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h1>Danh sách sinh viên</h1>
+<h1>Danh sách sinh viêns </h1>
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -71,6 +71,41 @@
         }
     </tbody>
 </table>
+<div id="pagination-container" class="pagination-container" style="display: flex;">
+    @if (TempData["endPage"] != null)
+    {
+        var endPage = (int)TempData["endPage"];
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                @for (int it = 1; it <= endPage; it++)
+                {
+                    <li class="page-item"><a href="javascript:void(0);" onclick="navigateToPage(@it)">@it</a></li>
+                }
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    }
+</div>
+
 <div>
     <a asp-controller = "Student" asp-action="Create">Create New Student</a>
 </div>
+
+<script>
+    function navigateToPage(pageIndex) {
+        // Lưu vị trí cuộn hiện tại vào localStorage
+        localStorage.setItem('scrollPosition', window.scrollY);
+        // Chuyển hướng đến trang với index
+        window.location.href = `@Url.Action("Index", "Home")?index=${pageIndex}`;
+    }
+
+    // Khi trang tải lại, khôi phục vị trí cuộn từ localStorage
+    window.onload = function () {
+        var scrollPosition = localStorage.getItem('scrollPosition');
+        if (scrollPosition) {
+            window.scrollTo(0, scrollPosition);
+            localStorage.removeItem('scrollPosition');
+        }
+    };
+</script>

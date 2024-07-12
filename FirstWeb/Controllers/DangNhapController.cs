@@ -26,31 +26,34 @@ namespace FirstWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CheckLogin(string taiKhoan, string matKhau)
         {
-            if (!string.IsNullOrEmpty(taiKhoan) && !string.IsNullOrEmpty(matKhau))
+            if (ModelState.IsValid)
             {
-                var loginResult = await _loginRepository.checkLogin(taiKhoan, matKhau);
-
-                if (loginResult != null)
+                if (!string.IsNullOrEmpty(taiKhoan) && !string.IsNullOrEmpty(matKhau))
                 {
-                    if(loginResult.role)
+                    var loginResult = await _loginRepository.checkLogin(taiKhoan, matKhau);
+
+                    if (loginResult != null)
                     {
-                        HttpContext.Session.SetObjectAsJson("User", loginResult);
-                        return RedirectToAction("Index", "Home");
+                        if (loginResult.role)
+                        {
+                            HttpContext.Session.SetObjectAsJson("User", loginResult);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            HttpContext.Session.SetObjectAsJson("User", loginResult);
+                            return RedirectToAction("LichSuView", "LichSu");
+                        }
                     }
                     else
                     {
-                        HttpContext.Session.SetObjectAsJson("User", loginResult);
-                        return RedirectToAction("LichSuView", "LichSu");
+                        TempData["ErrorMessage"] = "Đăng nhập không thành công!";
                     }
                 }
-                else
-                {
-                    TempData["ErrorMessage"] = "Đăng nhập không thành công!";
-                }
             }
-        }
             ViewBag.Majors = await _majorRepository.GetNganhAsync();
             return View("DangNhapView");
+        }        
 
     }
 }

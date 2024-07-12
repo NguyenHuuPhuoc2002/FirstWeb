@@ -18,10 +18,8 @@ namespace FirstWeb.Controllers
             this._majorRepository = majorRepository;
         }
 
-        public async Task<IActionResult> Index([Bind("maNganh, tenNganh")] string maNganh, string tenNganh)
+        public async Task<IActionResult> Index([Bind("maNganh, tenNganh")] string maNganh, string tenNganh, int index)
         {
-            /*var majors = await _studentRepository.GetSearchAsync(maNganh);
-            IEnumerable<Student> students = await _studentRepository.GetAllAsync();*/
             IEnumerable<Student> students;
 
             if (!string.IsNullOrEmpty(maNganh))
@@ -35,7 +33,14 @@ namespace FirstWeb.Controllers
             }
             else
             {
-                students = await _studentRepository.GetAllAsync();
+                var totalTask = _studentRepository.GetAllNumItemAsync();
+                var total = await totalTask;
+                var endPage = (total % 6 == 0) ? total / 6 : (total / 6) + 1;
+                students = await _studentRepository.GetAllItemAsync(index);
+                ViewBag.Majors = await _majorRepository.GetNganhAsync();
+                TempData["endPage"] = endPage;
+                var studentList = students.ToList();
+                //students = await _studentRepository.GetAllAsync();
             }
             ViewBag.Majors = await _majorRepository.GetNganhAsync();
             return View(students);
