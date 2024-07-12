@@ -48,11 +48,9 @@ namespace FirstWeb.Controllers
                     TempData["ErrorMessage"] = "Đăng nhập không thành công!";
                 }
             }
-            
-            return RedirectToAction("DangNhapView");
         }
-        
-
+            ViewBag.Majors = await _majorRepository.GetNganhAsync();
+            return View("DangNhapView");
 
     }
 }
