@@ -30,12 +30,6 @@ namespace FirstWeb.Controllers
             return View(students);
         }
 
-        // GET: GioHang/Add
-        public IActionResult Add()
-        {
-            return View();
-        }
-
         // POST: GioHang/Add
         [HttpPost, ActionName("Add")]
         [ValidateAntiForgeryToken]

@@ -2,12 +2,15 @@
 
 @{
     ViewData["Title"] = "Danh sách sinh viên trong giỏ ";
+    var soluong = Context.Session.GetObjectFromJson<List<Student>>("Students") ?? new List<Student>();
+    int total = soluong.Sum(student => student.soDiemCong);
 }
    
 
 <h1>Danh sách sinh viên trong giỏ</h1>
 
 @if (Model != null && Model.Any())
+
 {
     <form asp-controller="GioHang" asp-action="ClearAll" method="post">
         <button type="submit" class="btn btn-danger btn-white">Clear All</button>
@@ -87,9 +90,16 @@
         </form>
         </tbody>
     </table>
-    <form asp-controller="LichSu" asp-action="DuoiHoc" method="post">
-        <button type="submit" class="w3-button w3-green w3-border">Đuổi học</button>
-    </form>
+    <div style="display: flex;">
+        <div>
+            <form asp-controller="LichSu" asp-action="DuoiHoc" method="post">
+                <button type="submit" class="w3-button w3-green w3-border">Đuổi học</button>
+            </form>
+        </div>
+        <div style="margin-left: 50px; margin-top: 10px">
+            <p>Tổng số điểm cộng: @total </p>
+        </div>
+    </div>
 
 }
 else

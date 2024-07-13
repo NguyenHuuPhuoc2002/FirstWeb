@@ -71,22 +71,22 @@
         }
     </tbody>
 </table>
-@* <div id="pagination-container" class="pagination-container" style="display: flex;">
-    @if (TempData["endPage2"] != null)
+<div id="pagination-container" class="pagination-container" style="display: flex;">
+    @if (TempData["endPageName"] != null)
     {
-        var endPage = (int)TempData["endPage2"];
+        var endPage = (int)TempData["endPageName"];
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link">Previous</a></li>
                 @for (int it = 1; it <= endPage; it++)
                 {
-                    <li class="page-item"><a asp-controller="TimKiemTheoMa" asp-action="TimKiemTheoMaView" asp-route-index="@it">@it</a></li>
+                    <li class="page-item"><a asp-controller="TimKiemTheoTen" asp-action="TimKiemTheoTenView" asp-route-index="@it">@it</a></li>
                 }
                 <li class="page-item"><a class="page-link">Next</a></li>
             </ul>
         </nav>
     }
-</div> *@
+</div>
 
 <div>
     <a asp-controller="Student" asp-action="Create">Create New Student</a>

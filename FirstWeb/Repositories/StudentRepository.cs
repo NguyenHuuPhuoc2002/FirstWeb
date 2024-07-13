@@ -11,6 +11,8 @@ namespace FirstWeb.Repositories
     {
         private readonly IConfiguration _configuration;
         private readonly SqlConnection _connection;
+
+        //CRUD
         public StudentRepository(IConfiguration configuration)
         {
             this._configuration = configuration;
@@ -63,6 +65,33 @@ namespace FirstWeb.Repositories
             };
             await _connection.ExecuteAsync(query, parameter);
         }
+        public async Task<Student> GetByIdAsync(string id)
+        {
+            var query = "SELECT * FROM Students WHERE MaSV = @maSV";
+            var parameter = new { maSV = id };
+            return await _connection.QuerySingleOrDefaultAsync<Student>(query, parameter);
+        }
+
+        //Trang chu - phan trang
+        public async Task<IEnumerable<Student>> GetAllItemAsync(int index)
+        {
+            int offset = (index > 0) ? (index - 1) * 4 : 0;
+            var query = @"SELECT* FROM Students ORDER BY maSV OFFSET @Offset ROWS FETCH NEXT 4 ROWS ONLY";
+            var parameter = new { Offset = offset };
+            var result = await _connection.QueryAsync<Student>(query,parameter);
+            return result;
+        }
+        public async Task<int> GetNumItemAsync()
+        {
+            var query = "SELECT COUNT(*) FROM Students";
+
+            // Thực hiện truy vấn bằng Dapper
+            var result = await _connection.QueryFirstOrDefaultAsync<int>(query);
+
+            return result;
+        }
+
+        //Tim kiem ma nganh - phan trang
         public async Task<int> GetNumMarjorItemAsync(string id)
         {
             var query = @"SELECT COUNT(*) FROM Students WHERE MaNganh = @maNganh";
@@ -82,6 +111,30 @@ namespace FirstWeb.Repositories
             var parameter = new
             {
                 maNganh = maNganh,
+                Offset = offset
+            };
+            var result = await _connection.QueryAsync<Student>(query, parameter);
+            return result;
+        }
+
+        //Tim kiem ten - phan trang
+        public async Task<int> GetTotalNameAsync(string name)
+        {
+            var query = @"SELECT COUNT(*) FROM Students WHERE HoTen LIKE '%' + @name + '%'";
+            var parameter = new
+            {
+                name = name
+            };
+            var result = await _connection.QueryFirstOrDefaultAsync<int>(query, parameter);
+            return result;
+        }
+        public async Task<IEnumerable<Student>> GetAllNameItemAsync(string name, int index)
+        {
+            var offset = (index > 0) ? (index - 1) * 4 : 0;
+            var query = @"SELECT * FROM Students WHERE HoTen LIKE '%' + @name + '%' ORDER BY HoTen OFFSET @Offset ROWS FETCH NEXT 4 ROWS ONLY";
+            var parameter = new
+            {
+                name = name,
                 Offset = offset
             };
             var result = await _connection.QueryAsync<Student>(query, parameter);
