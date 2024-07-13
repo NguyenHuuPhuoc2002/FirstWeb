@@ -32,7 +32,6 @@ namespace FirstWeb.Repositories
             };
             await _connection.ExecuteAsync(query, parameters);
         }
-
         public async Task DeleteAsync(string id)
         {
             var query = @"DELETE FROM Students WHERE MaSV = @maSV";
@@ -42,57 +41,6 @@ namespace FirstWeb.Repositories
             };
             await _connection.ExecuteAsync(query, parmeter);
         }
-
-        public async Task<IEnumerable<Student>> GetAllAsync()
-        {
-            var query = "SELECT * FROM Students ";
-            
-            var result = await _connection.QueryAsync<Student>(query);
-            return result;
-        }
-
-        public async Task<IEnumerable<Student>> GetAllItemAsync(int index)
-        {
-            int offset = (index > 0) ? (index - 1) * 4 : 0;
-            var query = @"SELECT* FROM Students ORDER BY maSV OFFSET @Offset ROWS FETCH NEXT 4 ROWS ONLY";
-            var parameter = new { Offset = offset };
-            var result = await _connection.QueryAsync<Student>(query,parameter);
-            return result;
-        }
-
-        public async Task<int> GetNumItemAsync()
-        {
-            var query = "SELECT COUNT(*) FROM Students";
-
-            // Thực hiện truy vấn bằng Dapper
-            var result = await _connection.QueryFirstOrDefaultAsync<int>(query);
-
-            return result;
-        }
-
-        public async Task<Student> GetByIdAsync(string id)
-        {
-            var query = "SELECT * FROM Students WHERE MaSV = @maSV";
-            var parameter = new { maSV = id };
-            return await _connection.QuerySingleOrDefaultAsync<Student>(query, parameter);
-        }
-
-        public async Task<IEnumerable<Student>> GetSearchMaNganhAsync(string maNganh)
-        {
-            var query = "SELECT * FROM Students WHERE MaNganh = @maNganh";
-            var parameters = new { maNganh = maNganh };
-            var majors = await _connection.QueryAsync<Student>(query, parameters);
-            return majors.ToList();
-        }
-
-        public async Task<IEnumerable<Student>> GetSearchNameAsync(string name)
-        {
-            var query = "SELECT * FROM Students WHERE HoTen LIKE '%' + @name + '%'";
-            var parameter = new { name = name };
-            var students = await _connection.QueryAsync<Student>(query, parameter);
-            return students.ToList();
-        }
-
         public async Task UpdateAsync(Student entity)
         {
             var query = @"UPDATE Students 

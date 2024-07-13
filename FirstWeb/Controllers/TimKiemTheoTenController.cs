@@ -21,13 +21,8 @@ namespace FirstWeb.Controllers
             if (!string.IsNullOrEmpty(tenNganh))
             {
                 ViewBag.Majors = await _majorRepository.GetNganhAsync();
-                studentList = await _studentRepository.GetSearchNameAsync(tenNganh);
-                ViewBag.Search = tenNganh;
                 return View(studentList);
             }
-            ViewBag.Majors = await _majorRepository.GetNganhAsync();
-            return RedirectToAction("Index", "Home");
-        }
 
     }
 }
